@@ -1,0 +1,66 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended"],
+  "rules": {
+    "ban": [true, ["_", "extend"], ["_", "isNull"], ["_", "isDefined"]],
+    "class-name": true,
+    "comment-format": [true, "check-space", { "ignore-words": ["TODO"] }],
+    "curly": true,
+    "eofline": true,
+    "forin": true,
+    "indent": [true, "spaces", 2],
+    "interface-name": true,
+    "jsdoc-format": true,
+    "label-position": true,
+    "max-line-length": [true, 140],
+    "no-arg": true,
+    "no-bitwise": true,
+    "no-console": [true, "debug", "info", "time", "timeEnd", "trace"],
+    "no-construct": true,
+    "no-debugger": true,
+    "no-duplicate-variable": true,
+    "no-empty": true,
+    "no-eval": true,
+    "no-string-literal": true,
+    "object-literal-sort-keys": false,
+    "no-unsafe-any": false,
+    "trailing-comma": false,
+    "no-trailing-whitespace": true,
+    "no-unused-expression": true,
+    "no-var-requires": false,
+    "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace"],
+    "only-arrow-functions": false,
+    "quotemark": [true, "single"],
+    "radix": true,
+    "semicolon": true,
+    "space-before-function-paren": [
+      false,
+      {
+        "anonymous": "never",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ],
+    "triple-equals": [true, "allow-null-check"],
+    "typedef": [
+      true,
+      "callSignature",
+      "catchClause",
+      "indexSignature",
+      "parameter",
+      "propertySignature",
+      "variableDeclarator"
+    ],
+    "variable-name": false,
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-type"
+    ]
+  },
+  "jsRules": {},
+  "rulesDirectory": []
+}

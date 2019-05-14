@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css'>
+  <title>Elche</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="dist/elch.js"></script>
+  <script>
+
+    // Test Template
+    const myTemplate = new Elch({
+      name: 'my-template',
+      state: { count: 0 },
+      logic: { incrementCount(){ console.log(this); } },
+      view: () => /*html*/`
+        <div class="bob">
+          <h1>Just a demo!</h1>
+          <do if="name.length > 0">
+            <p id="idval" class="classval">Resolve pls: {{name}}!</p>
+          </do>
+          <do if="true">
+            <p>todo</p>
+          </do>
+          <do for="const i=0; i<5; ++i">
+            <p>todo</p>
+          </do>
+          <input type="text" value="${window.performance.now().toFixed(2)}" readonly>
+          <button>Click</button>
+        </div>`
+      });
+      console.log(myTemplate);
+      myTemplate.mountTo(document.getElementById('app'));
+
+      // Set test interval for updates.
+      setInterval(() => { myTemplate.update(); }, 1000);
+  </script>
+</body>
+</html>
