@@ -1,4 +1,4 @@
-'use strict';
+/*! elch | MIT License | https://github.com/pauwell/elch */
 
 import parseHTML from '../util/parse-html';
 import createVNode, { IVNode } from './../vdom/createVNode';

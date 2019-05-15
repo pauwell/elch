@@ -1,4 +1,4 @@
-'use strict';
+/*! elch | MIT License | https://github.com/pauwell/elch */
 
 import { IVNode } from '../createVNode';
 import renderVNode from '../renderVNode';

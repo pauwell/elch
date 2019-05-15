@@ -1,4 +1,4 @@
-'use strict';
+/*! elch | MIT License | https://github.com/pauwell/elch */
 
 /**
  * Parse a string to a HTML collection.

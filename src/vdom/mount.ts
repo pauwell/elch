@@ -1,4 +1,4 @@
-'use strict';
+/*! elch | MIT License | https://github.com/pauwell/elch */
 
 /** Mount a DOM node to a given root node.
  * @param node The node that should be mounted.

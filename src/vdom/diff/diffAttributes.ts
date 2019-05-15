@@ -1,4 +1,4 @@
-'use strict';
+/*! elch | MIT License | https://github.com/pauwell/elch */
 
 /**
  * Compares the new attribute-list with the old one and creates

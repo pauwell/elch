@@ -1,4 +1,4 @@
-'use strict';
+/*! elch | MIT License | https://github.com/pauwell/elch */
 
 import parseView from '../parser/parseView';
 import diff from '../vdom/diff/diff';
