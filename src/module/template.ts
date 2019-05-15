@@ -21,16 +21,16 @@ export default class Template {
   private _stateChanged = false;
 
   /**
-   * TODO
-   * @param properties TODO
+   * Construct the template from a set of properties.
+   * @param properties The properties from which the template gets constructed.
    */
   constructor(properties: ITemplate) {
     this.create(properties);
   }
 
   /**
-   * TODO
-   * @param properties TODO
+   * Creating the template from a set of properties.
+   * @param properties The properties from which the template gets created.
    */
   public create(properties: ITemplate) {
     // Initialize the template.
@@ -71,7 +71,7 @@ export default class Template {
   }
 
   /**
-   * TODO
+   * Update the view.
    */
   public update() {
     // Parse the string view into virtual nodes.
