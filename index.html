@@ -15,13 +15,13 @@
     // Test Template
     const myTemplate = new Elch({
       name: 'my-template',
-      state: { count: 0 },
+      state: { count: 69 },
       logic: { incrementCount(){ console.log(this); } },
       view: () => /*html*/`
         <div class="bob">
           <h1>Just a demo!</h1>
           <do if="name.length > 0">
-            <p id="idval" class="classval">Resolve pls: {{name}}!</p>
+            <p id="idval" class="classval">Count: {{count}}!</p>
           </do>
           <do if="true">
             <p>todo</p>
@@ -37,7 +37,7 @@
       myTemplate.mountTo(document.getElementById('app'));
 
       // Set test interval for updates.
-      setInterval(() => { myTemplate.update(); }, 1000);
+      setInterval(() => { myTemplate.update(); }, 10000);
   </script>
 </body>
 </html>

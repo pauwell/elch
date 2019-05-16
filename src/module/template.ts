@@ -44,13 +44,13 @@ export default class Template {
       }
     }
     stateProperties.forEach((property) => {
-      Object.defineProperty(this._template.state, property, {
+      Object.defineProperty(this._template, property, {
         get() {
-          console.log('Calling getter for ' + property);
-          return property;
+          console.log('Calling getter for ' + property, this);
+          return this.state[property];
         },
         set(value: any) {
-          property = value;
+          this.state[property] = value;
           console.log('Calling setter for ' + property);
           // this._stateChanged = true; TODO access `this`.
         }
@@ -67,7 +67,7 @@ export default class Template {
     }
 
     // Parse the string view into virtual nodes.
-    this._parsedView = parseView(this._template.view());
+    this._parsedView = parseView(this._template.view(), this._template);
   }
 
   /**
@@ -75,7 +75,7 @@ export default class Template {
    */
   public update() {
     // Parse the string view into virtual nodes.
-    const newParsedView: IVNode = parseView(this._template.view());
+    const newParsedView: IVNode = parseView(this._template.view(), this._template);
 
     // Create patches for the DOM by diffing with the old view.
     const patch = diff(this._parsedView, newParsedView);
