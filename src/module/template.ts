@@ -21,6 +21,13 @@ export default class Template {
   private _stateChanged = false;
 
   /**
+   * Expose the inner template properties.
+   */
+  public get template() {
+    return this._template;
+  }
+
+  /**
    * Construct the template from a set of properties.
    * @param properties The properties from which the template gets constructed.
    */

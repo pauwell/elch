@@ -31,7 +31,7 @@ const parseNodes = (htmlRoot: HTMLElement, context: any): HTMLElement => {
   }
 
   // Create new node to replace the `do`-node.
-  const newNode = document.createElement('div');
+  const newNode = document.createElement('span');
   newNode.innerHTML = doNode.innerHTML;
 
   if (doNode.hasAttribute('js')) {
