@@ -3,6 +3,7 @@
 import parseHTML from '../util/parse-html';
 import evalIfNode from './eval/evalIfNode';
 import evalJSNode from './eval/evalJSNode';
+import evalForNode from './eval/evalForNode';
 
 const parseDoNodes = (view: string, context: any) => {
   console.log('Parsing do-nodes');
@@ -45,6 +46,7 @@ const parseNodes = (htmlRoot: HTMLElement, context: any): HTMLElement => {
     }
   } else if (doNode.hasAttribute('for')) {
     // TODO impl.
+    newNode.innerHTML = evalForNode(newNode, doNode.getAttribute('for'), context);
     doNode.parentNode.replaceChild(newNode, doNode);
   }
 
