@@ -1,6 +1,8 @@
 /*! elch | MIT License | https://github.com/pauwell/elch */
 
 import { IVNode } from './createVNode';
+import evalDoEvent from '../parser/eval/evalDoEvent';
+import { ITemplate } from '../module/template';
 
 /** Translate a string into a DOM text node.
  * @param vNode The content of the text node.
@@ -12,7 +14,7 @@ const renderText = (vNode: string): Text => {
 /** Translate a vNode into a DOM node.
  * @param vNode The vNode that should be rendered.
  */
-const renderElem = (vNode: IVNode): HTMLElement => {
+const renderElem = (vNode: IVNode, context: ITemplate): HTMLElement => {
   // Default values.
   vNode.attributes = vNode.attributes || {};
   vNode.children = vNode.children || [];
@@ -22,13 +24,19 @@ const renderElem = (vNode: IVNode): HTMLElement => {
 
   // Insert attributes from the vNode into the DOM node.
   for (const [k, v] of Object.entries(vNode.attributes)) {
-    $el.setAttribute(k, v as string);
+    if (k === 'do-event') {
+      const doEvent = evalDoEvent(v, context);
+      $el.addEventListener(doEvent.type, doEvent.listener);
+      $el.removeAttribute('do-event');
+    } else {
+      $el.setAttribute(k, v as string);
+    }
   }
 
   // Render child vNodes.
   for (const child of vNode.children) {
     // Recursively call this function again on child vNode.
-    const $child = renderVNode(child);
+    const $child = renderVNode(child, context);
     // Add the parsed child to the DOM node.
     $el.appendChild($child);
   }
@@ -36,13 +44,13 @@ const renderElem = (vNode: IVNode): HTMLElement => {
   return $el;
 };
 
-const renderVNode = (vNode: IVNode | string): Text | HTMLElement => {
+const renderVNode = (vNode: IVNode | string, context: ITemplate): Text | HTMLElement => {
   if (typeof vNode === 'string') {
     // Render text node.
     return renderText(vNode);
   }
   // Render virtual node.
-  return renderElem(vNode);
+  return renderElem(vNode, context);
 };
 
 export default renderVNode;

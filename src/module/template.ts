@@ -18,7 +18,6 @@ export default class Template {
   private _parsedView: IVNode;
   private _renderedView: HTMLElement;
   private _rootElement: HTMLElement;
-  private _stateChanged = false;
 
   /**
    * Construct the template from a set of properties.
@@ -52,16 +51,16 @@ export default class Template {
     }
     const that = this; // Used to reference parent context in defineProperty().
     stateProperties.forEach((property) => {
-      Object.defineProperty.call(that, this._template, property, {
+      let val = this.template.state[property];
+      Object.defineProperty.call(that, this._template.state, property, {
         get() {
-          console.log('Calling getter for ' + property, that);
-          return this.state[property];
+          // console.log('Calling getter for ' + property, that);
+          return val;
         },
         set(value: any) {
-          this.state[property] = value;
-          console.log('Calling setter for ' + property);
+          // console.log('Calling setter for ' + property);
+          val = value;
           that.update();
-          // this._stateChanged = true; TODO access `this`.
         }
       });
     });
@@ -87,7 +86,7 @@ export default class Template {
     const newParsedView: IVNode = parseView(this._template.view(), this._template);
 
     // Create patches for the DOM by diffing with the old view.
-    const patch = diff(this._parsedView, newParsedView);
+    const patch = diff(this._parsedView, newParsedView, this._template);
 
     // Apply the created patches to the root element.
     this._rootElement = patch(this._rootElement) as HTMLElement;
@@ -101,7 +100,7 @@ export default class Template {
    */
   public mountTo(rootEl: HTMLElement) {
     // Render the view.
-    this._renderedView = renderVNode(this._parsedView) as HTMLElement;
+    this._renderedView = renderVNode(this._parsedView, this._template) as HTMLElement;
 
     // Replace the root element with the result.
     this._rootElement = mount(this._renderedView, rootEl);

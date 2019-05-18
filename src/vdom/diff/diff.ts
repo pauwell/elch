@@ -4,6 +4,7 @@ import { IVNode } from '../createVNode';
 import renderVNode from '../renderVNode';
 import diffAttributes from './diffAttributes';
 import diffChildren from './diffChildren';
+import { ITemplate } from '../../module/template';
 
 /**
  * Creating a patch to merge changes in the vNodes into the DOM root.
@@ -12,7 +13,8 @@ import diffChildren from './diffChildren';
  */
 const diff = (
   oldVTree: IVNode | string,
-  newVTree: IVNode | string
+  newVTree: IVNode | string,
+  context: ITemplate
 ): ((node: HTMLElement | Text) => HTMLElement | Text) => {
   // Assuming oldVTree is not undefined.
   if (newVTree === undefined) {
@@ -28,7 +30,7 @@ const diff = (
     if (oldVTree !== newVTree) {
       // If they differ, just render the new tree.
       return (node) => {
-        const newNode = renderVNode(newVTree);
+        const newNode = renderVNode(newVTree, context);
         node.replaceWith(newNode);
         return newNode;
       };
@@ -42,7 +44,7 @@ const diff = (
   // To find the differences and we simply render the new tree.
   if (oldVTree.tagName !== newVTree.tagName) {
     return (node) => {
-      const newNode = renderVNode(newVTree);
+      const newNode = renderVNode(newVTree, context);
       node.replaceWith(newNode);
       return newNode;
     };
@@ -54,10 +56,10 @@ const diff = (
   // 3. Their attributes and children may be different.
 
   // Create a patch for the attributes.
-  const patchAttributes = diffAttributes(oldVTree.attributes, newVTree.attributes);
+  const patchAttributes = diffAttributes(oldVTree.attributes, newVTree.attributes, context);
 
   // Create a patch for the child nodes.
-  const patchChildren = diffChildren(oldVTree.children, newVTree.children);
+  const patchChildren = diffChildren(oldVTree.children, newVTree.children, context);
 
   return (node) => {
     // Resolve the patches and return the node.
