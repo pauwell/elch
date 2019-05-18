@@ -6,7 +6,6 @@ import { ITemplate } from '../../module/template';
 const evalDoEvent = (statement: string, context: ITemplate) => {
   const eventType = statement.split(':')[0];
   const eventListener = context.logic[statement.split(':')[1]] || null;
-  debugger;
   return {
     type: eventType,
     listener: eventListener

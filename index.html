@@ -16,17 +16,17 @@
     const myTemplate = new Elch({
       name: 'my-template',
       state: { count: 0 },
-      logic: { incrementCount(){ console.log('incrementing count', this); this.count += 1; } },
+      logic: { incrementCount(){ this.count += 1; } },
       view: () => /*html*/`
         <div class="bob">
           <h1>Just a demo!</h1>
           <do if="this.name.length > 0">
             <p id="idval" class="classval">Total updates since creation: {{count}}!</p>
           </do>
-          <do if="this.count > 2">
+          <do if="this.state.count > 2">
             <p>count greater than 2</p>
           </do>
-          <do for="let i=0; i<this.count; ++i">
+          <do for="let i=0; i<this.state.count; ++i">
             <p>todo, evaluate 'i': {{ i }}</p>
           </do>
           <input type="text" value="${window.performance.now().toFixed(2)}" readonly>
@@ -35,18 +35,6 @@
       });
       console.log(myTemplate);
       myTemplate.mountTo(document.getElementById('app'));
-
-      // TEST
-      /* document.getElementById('test-inc').addEventListener('click', () => {
-        myTemplate.template.count += 1;
-      }); */
-
-      // Set test interval for updates.
-      /* setInterval(() => {
-        myTemplate.template.count += 1;
-        myTemplate.update();
-        console.log(myTemplate);
-      }, 10000); */
   </script>
 </body>
 </html>
