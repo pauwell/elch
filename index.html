@@ -9,35 +9,44 @@
 </head>
 <body>
   <div id="app"></div>
+  <button id="test-inc">Increase Count</button>
   <script src="dist/elch.js"></script>
   <script>
-
     // Test Template
     const myTemplate = new Elch({
       name: 'my-template',
       state: { count: 0 },
-      logic: { incrementCount(){ console.log(this); } },
+      logic: { incrementCount(){ console.log('incrementing count', this); this.count += 1; } },
       view: () => /*html*/`
         <div class="bob">
           <h1>Just a demo!</h1>
-          <do if="name.length > 0">
-            <p id="idval" class="classval">Resolve pls: {{name}}!</p>
+          <do if="this.name.length > 0">
+            <p id="idval" class="classval">Total updates since creation: {{count}}!</p>
           </do>
-          <do if="true">
-            <p>todo</p>
+          <do if="this.count > 2">
+            <p>count greater than 2</p>
           </do>
-          <do for="const i=0; i<5; ++i">
-            <p>todo</p>
+          <do for="let i=0; i<this.count; ++i">
+            <p>todo, evaluate 'i': {{ i }}</p>
           </do>
           <input type="text" value="${window.performance.now().toFixed(2)}" readonly>
-          <button>Click</button>
+          <button do-event="click:incrementCount">Click</button>
         </div>`
       });
       console.log(myTemplate);
       myTemplate.mountTo(document.getElementById('app'));
 
+      // TEST
+      /* document.getElementById('test-inc').addEventListener('click', () => {
+        myTemplate.template.count += 1;
+      }); */
+
       // Set test interval for updates.
-      setInterval(() => { myTemplate.update(); }, 1000);
+      /* setInterval(() => {
+        myTemplate.template.count += 1;
+        myTemplate.update();
+        console.log(myTemplate);
+      }, 10000); */
   </script>
 </body>
 </html>

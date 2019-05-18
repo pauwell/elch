@@ -21,16 +21,23 @@ export default class Template {
   private _stateChanged = false;
 
   /**
-   * TODO
-   * @param properties TODO
+   * Construct the template from a set of properties.
+   * @param properties The properties from which the template gets constructed.
    */
   constructor(properties: ITemplate) {
     this.create(properties);
   }
 
   /**
-   * TODO
-   * @param properties TODO
+   * Expose the inner template properties.
+   */
+  public get template() {
+    return this._template;
+  }
+
+  /**
+   * Creating the template from a set of properties.
+   * @param properties The properties from which the template gets created.
    */
   public create(properties: ITemplate) {
     // Initialize the template.
@@ -43,15 +50,17 @@ export default class Template {
         stateProperties.push(stateProp);
       }
     }
+    const that = this; // Used to reference parent context in defineProperty().
     stateProperties.forEach((property) => {
-      Object.defineProperty(this._template.state, property, {
+      Object.defineProperty.call(that, this._template, property, {
         get() {
-          console.log('Calling getter for ' + property);
-          return property;
+          console.log('Calling getter for ' + property, that);
+          return this.state[property];
         },
         set(value: any) {
-          property = value;
+          this.state[property] = value;
           console.log('Calling setter for ' + property);
+          that.update();
           // this._stateChanged = true; TODO access `this`.
         }
       });
@@ -67,15 +76,15 @@ export default class Template {
     }
 
     // Parse the string view into virtual nodes.
-    this._parsedView = parseView(this._template.view());
+    this._parsedView = parseView(this._template.view(), this._template);
   }
 
   /**
-   * TODO
+   * Update the view.
    */
   public update() {
     // Parse the string view into virtual nodes.
-    const newParsedView: IVNode = parseView(this._template.view());
+    const newParsedView: IVNode = parseView(this._template.view(), this._template);
 
     // Create patches for the DOM by diffing with the old view.
     const patch = diff(this._parsedView, newParsedView);
