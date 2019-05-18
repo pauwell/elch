@@ -9,13 +9,14 @@
 </head>
 <body>
   <div id="app"></div>
+  <button id="test-inc">Increase Count</button>
   <script src="dist/elch.js"></script>
   <script>
     // Test Template
     const myTemplate = new Elch({
       name: 'my-template',
       state: { count: 0 },
-      logic: { incrementCount(){ console.log(this); } },
+      logic: { incrementCount(){ console.log('incrementing count', this); this.count += 1; } },
       view: () => /*html*/`
         <div class="bob">
           <h1>Just a demo!</h1>
@@ -29,18 +30,23 @@
             <p>todo, evaluate 'i': {{ i }}</p>
           </do>
           <input type="text" value="${window.performance.now().toFixed(2)}" readonly>
-          <button>Click</button>
+          <button do-event="click:incrementCount">Click</button>
         </div>`
       });
       console.log(myTemplate);
       myTemplate.mountTo(document.getElementById('app'));
 
+      // TEST
+      /* document.getElementById('test-inc').addEventListener('click', () => {
+        myTemplate.template.count += 1;
+      }); */
+
       // Set test interval for updates.
-      setInterval(() => {
+      /* setInterval(() => {
         myTemplate.template.count += 1;
         myTemplate.update();
         console.log(myTemplate);
-      }, 10000);
+      }, 10000); */
   </script>
 </body>
 </html>

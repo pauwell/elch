@@ -1,9 +1,9 @@
 /*! elch | MIT License | https://github.com/pauwell/elch */
 
 import parseHTML from '../util/parse-html';
+import evalForNode from './eval/evalForNode';
 import evalIfNode from './eval/evalIfNode';
 import evalJSNode from './eval/evalJSNode';
-import evalForNode from './eval/evalForNode';
 
 const parseDoNodes = (view: string, context: any) => {
   console.log('Parsing do-nodes');

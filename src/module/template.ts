@@ -21,18 +21,18 @@ export default class Template {
   private _stateChanged = false;
 
   /**
-   * Expose the inner template properties.
-   */
-  public get template() {
-    return this._template;
-  }
-
-  /**
    * Construct the template from a set of properties.
    * @param properties The properties from which the template gets constructed.
    */
   constructor(properties: ITemplate) {
     this.create(properties);
+  }
+
+  /**
+   * Expose the inner template properties.
+   */
+  public get template() {
+    return this._template;
   }
 
   /**
@@ -50,15 +50,17 @@ export default class Template {
         stateProperties.push(stateProp);
       }
     }
+    const that = this; // Used to reference parent context in defineProperty().
     stateProperties.forEach((property) => {
-      Object.defineProperty(this._template, property, {
+      Object.defineProperty.call(that, this._template, property, {
         get() {
-          console.log('Calling getter for ' + property, this);
+          console.log('Calling getter for ' + property, that);
           return this.state[property];
         },
         set(value: any) {
           this.state[property] = value;
           console.log('Calling setter for ' + property);
+          that.update();
           // this._stateChanged = true; TODO access `this`.
         }
       });
