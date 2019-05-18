@@ -1,9 +1,8 @@
 /*! elch | MIT License | https://github.com/pauwell/elch */
 
 import parseHTML from '../util/parse-html';
+import evalIfNode from './eval/evalIfNode';
 import evalJSNode from './eval/evalJSNode';
-// import evalIfNode from './eval/evalIfNode';
-// import evalForNode from './eval/evalForNode';
 
 const parseDoNodes = (view: string, context: any) => {
   console.log('Parsing do-nodes');
@@ -36,11 +35,18 @@ const parseNodes = (htmlRoot: HTMLElement, context: any): HTMLElement => {
 
   if (doNode.hasAttribute('js')) {
     newNode.innerText = evalJSNode(doNode.textContent, context);
+    doNode.parentNode.replaceChild(newNode, doNode);
+  } else if (doNode.hasAttribute('if')) {
+    // If statement false => return root?
+    if (evalIfNode(doNode.getAttribute('if'), context) === false) {
+      doNode.parentNode.removeChild(doNode);
+    } else {
+      doNode.parentNode.replaceChild(newNode, doNode);
+    }
+  } else if (doNode.hasAttribute('for')) {
+    // TODO impl.
+    doNode.parentNode.replaceChild(newNode, doNode);
   }
-  // TODO eval if-nodes, for-nodes
-
-  // Replace the old node with the new one.
-  doNode.parentNode.replaceChild(newNode, doNode);
 
   // Call this function again recursively with the modified root.
   return parseNodes(htmlRoot, context);
