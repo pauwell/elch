@@ -9,6 +9,9 @@ import { ITemplate } from '../../module/template';
  */
 const evalForNode = (forNode: HTMLSpanElement, condition: string, context: ITemplate): string => {
   const multipliedChildren: string[] = [];
+
+  // TODO: Variable context.
+
   Function(
     'multipliedChildren', // The multiplied content of the for-node.
     'innerHTML', // The content of the for-node.

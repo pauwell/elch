@@ -15,7 +15,7 @@ const evalJSNode = (statement: string, context: ITemplate): string => {
   }
 
   // TODO handle error.
-  return 'Error';
+  return 'Unknown variable: ' + statement;
 };
 
 export default evalJSNode;

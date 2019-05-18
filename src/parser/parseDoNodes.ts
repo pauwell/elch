@@ -45,7 +45,6 @@ const parseNodes = (htmlRoot: HTMLElement, context: any): HTMLElement => {
       doNode.parentNode.replaceChild(newNode, doNode);
     }
   } else if (doNode.hasAttribute('for')) {
-    // TODO impl.
     newNode.innerHTML = evalForNode(newNode, doNode.getAttribute('for'), context);
     doNode.parentNode.replaceChild(newNode, doNode);
   }

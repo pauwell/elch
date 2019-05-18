@@ -25,8 +25,8 @@
           <do if="this.count > 2">
             <p>count greater than 2</p>
           </do>
-          <do for="let i=0; i<5; ++i">
-            <p>todo</p>
+          <do for="let i=0; i<this.count; ++i">
+            <p>todo, evaluate 'i': {{ i }}</p>
           </do>
           <input type="text" value="${window.performance.now().toFixed(2)}" readonly>
           <button>Click</button>
@@ -40,7 +40,7 @@
         myTemplate.template.count += 1;
         myTemplate.update();
         console.log(myTemplate);
-      }, 4000);
+      }, 10000);
   </script>
 </body>
 </html>
