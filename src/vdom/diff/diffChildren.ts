@@ -1,5 +1,6 @@
 /*! elch | MIT License | https://github.com/pauwell/elch */
 
+import { ITemplate } from '../../module/template';
 import { IVNode } from '../createVNode';
 import renderVNode from '../renderVNode';
 import diff from './diff';
@@ -9,7 +10,11 @@ import diff from './diff';
  * @param oldChildren The old list of children.
  * @param newChildren The new list of children.
  */
-const diffChildren = (oldChildren: Array<IVNode | string>, newChildren: Array<IVNode | string>) => {
+const diffChildren = (
+  oldChildren: Array<IVNode | string>,
+  newChildren: Array<IVNode | string>,
+  context: ITemplate
+) => {
   // Defaults for undefined.
   oldChildren = oldChildren || [];
   newChildren = newChildren || [];
@@ -17,14 +22,14 @@ const diffChildren = (oldChildren: Array<IVNode | string>, newChildren: Array<IV
   // Loop through all old children and diff them.
   const childPatches: Array<(node: HTMLElement | Text) => HTMLElement | Text> = [];
   oldChildren.forEach((oldChild, i) => {
-    childPatches.push(diff(oldChild, newChildren[i]));
+    childPatches.push(diff(oldChild, newChildren[i], context));
   });
 
   // Render additional children (if any) and append them to the node.
   const additionalPatches: Array<(node: HTMLElement | Text) => HTMLElement | Text> = [];
   for (const additionalChild of newChildren.slice(oldChildren.length)) {
     additionalPatches.push((node: HTMLElement | Text) => {
-      node.appendChild(renderVNode(additionalChild));
+      node.appendChild(renderVNode(additionalChild, context));
       return node;
     });
   }

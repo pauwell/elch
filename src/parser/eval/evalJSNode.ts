@@ -6,12 +6,12 @@ import { ITemplate } from '../../module/template';
 const evalJSNode = (statement: string, context: ITemplate): string => {
   // Evaluate state variable.
   if (context.state.hasOwnProperty(statement)) {
-    return context[statement];
+    return context.state[statement];
   }
 
   // Evaluate logic function.
   if (context.logic.hasOwnProperty(statement)) {
-    return context[statement]();
+    return context.logic[statement]();
   }
 
   // TODO handle error.

@@ -1,13 +1,12 @@
 /*! elch | MIT License | https://github.com/pauwell/elch */
 
+import { ITemplate } from '../module/template';
 import parseHTML from '../util/parse-html';
 import evalForNode from './eval/evalForNode';
 import evalIfNode from './eval/evalIfNode';
 import evalJSNode from './eval/evalJSNode';
 
-const parseDoNodes = (view: string, context: any) => {
-  console.log('Parsing do-nodes');
-
+const parseDoNodes = (view: string, context: ITemplate) => {
   // Parse the string view into HTML and get the root element.
   const htmlRoot: Element = parseHTML(
     view.replace(/{[\t ]*{/g, '<do js="">').replace(/}[\t ]*}/g, '</do>')
@@ -21,7 +20,7 @@ const parseDoNodes = (view: string, context: any) => {
  * @param htmlRoot The root HTML element.
  * @param context The context in which the statements are evaluated.
  */
-const parseNodes = (htmlRoot: HTMLElement, context: any): HTMLElement => {
+const parseNodes = (htmlRoot: HTMLElement, context: ITemplate): HTMLElement => {
   // Get next do-node.
   const doNode: HTMLElement = htmlRoot.querySelector('do[if], do[for], do[js]');
 
