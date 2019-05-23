@@ -14,8 +14,8 @@ const evalJSNode = (statement: string, context: ITemplate): string => {
     return context.logic[statement]();
   }
 
-  // TODO handle error.
-  return 'Unknown variable: ' + statement;
+  // Evaluate expression.
+  return new Function('return ' + statement + ';').call(context);
 };
 
 export default evalJSNode;

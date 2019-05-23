@@ -2,7 +2,11 @@
 
 import { ITemplate } from '../../module/template';
 
-// TODO impl.
+/**
+ * TODO
+ * @param statement TODO
+ * @param context TODO
+ */
 const evalDoEvent = (statement: string, context: ITemplate) => {
   const eventType = statement.split(':')[0];
   const eventListener = context.logic[statement.split(':')[1]] || null;
