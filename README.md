@@ -1,6 +1,10 @@
 # elch
 
-Reactive templates :horse:
+:fire: Simple
+
+:fire: Lightweight
+
+:fire: Independent
 
 `git clone https://github.com/pauwell/elch.git`
 
@@ -41,6 +45,12 @@ myTemplate.mountTo(document.getElementById('app'));
 
 ```html
 <do for="let i=0; i<this.state.count; ++i">
-  <p>Loop from zero to count.</p>
+  <p>{{ $i }}</p>
 </do>
 ```
+
+### `Event`-attributes
+```html
+<button do-event="click:incrementCount">Click</button>
+```
+
