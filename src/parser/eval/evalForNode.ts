@@ -9,16 +9,12 @@ import { ITemplate } from '../../module/template';
  */
 const evalForNode = (forNode: HTMLSpanElement, condition: string, context: ITemplate): string => {
   const multipliedChildren: string[] = [];
-
-  // TODO: Variable context.
-
   Function(
     'multipliedChildren', // The multiplied content of the for-node.
     'innerHTML', // The content of the for-node.
     'replaceLoopVarsInHTML', // Evaluate the inner appearances of the loop variable.
     `let loopVar;
       if(/^var |^let /.test('${condition}')){
-        console.log('${condition}'.slice('${condition}'.indexOf(' '), '${condition}'.indexOf('=')).trim());
         loopVar = '${condition}'.slice(
           '${condition}'.indexOf(' '),
           '${condition}'.indexOf('=')
@@ -37,20 +33,22 @@ const evalForNode = (forNode: HTMLSpanElement, condition: string, context: ITemp
 };
 
 /**
- * TODO
- * @param loopVar TODO
- * @param innerHTML TODO
+ * Find loop variables in HTML (e.g. $i, $xyz) and replace them with their actual value.
+ * @param loopVar The name of the variable.
+ * @param varValue The actual value of the variable.
+ * @param innerHTML The HTML that needs to be replaced.
  */
 const replaceLoopVarsInHTML = (loopVar: string, varValue: number, innerHTML: string) => {
-  // TODO only replace the variables between mustaches {{ $i }}
-  /* const findVarRegex = /{{.*?(\$i).*?}}/g;
-  while (findVarRegex.test(innerHTML)) {
-    innerHTML.replace(findVarRegex, loopVar);
-  } */
+  // Naive solution, just replace:
   while (innerHTML.indexOf('$' + loopVar) >= 0) {
     innerHTML = innerHTML.replace('$' + loopVar, String(varValue));
   }
 
+  // Fix this solution please:
+  /* const findVarRegex = /<do.*?js.*?>.*?(\$i).*?<\/do>/;
+  while (findVarRegex.test(innerHTML)) {
+    innerHTML = innerHTML.replace(findVarRegex, String(varValue));
+  } */
   return innerHTML;
 };
 

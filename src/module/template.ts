@@ -54,13 +54,11 @@ export default class Template {
       let val = this.template.state[property];
       Object.defineProperty.call(that, this._template.state, property, {
         get() {
-          // console.log('Calling getter for ' + property, that);
           return val;
         },
         set(value: any) {
-          // console.log('Calling setter for ' + property);
           val = value;
-          that.update();
+          that.update(); // TODO check diff if update is necessary.
         }
       });
     });
