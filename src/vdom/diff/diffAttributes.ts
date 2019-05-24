@@ -1,7 +1,7 @@
 /*! elch | MIT License | https://github.com/pauwell/elch */
 
-import evalDoEvent from '../../parser/eval/evalDoEvent';
 import { ITemplate } from '../../module/template';
+import evalDoEvent from '../../parser/eval/evalDoEvent';
 
 /**
  * Compares the new attribute-list with the old one and creates

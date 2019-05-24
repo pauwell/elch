@@ -1,10 +1,10 @@
 /*! elch | MIT License | https://github.com/pauwell/elch */
 
+import { ITemplate } from '../../module/template';
 import { IVNode } from '../createVNode';
 import renderVNode from '../renderVNode';
 import diffAttributes from './diffAttributes';
 import diffChildren from './diffChildren';
-import { ITemplate } from '../../module/template';
 
 /**
  * Creating a patch to merge changes in the vNodes into the DOM root.

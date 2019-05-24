@@ -1,8 +1,8 @@
 /*! elch | MIT License | https://github.com/pauwell/elch */
 
-import { IVNode } from './createVNode';
-import evalDoEvent from '../parser/eval/evalDoEvent';
 import { ITemplate } from '../module/template';
+import evalDoEvent from '../parser/eval/evalDoEvent';
+import { IVNode } from './createVNode';
 
 /** Translate a string into a DOM text node.
  * @param vNode The content of the text node.
