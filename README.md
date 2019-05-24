@@ -1,17 +1,21 @@
 # elch
 
+## Features
+
 :fire: Simple
 
 :fire: Lightweight
 
 :fire: Independent
 
+## Setup
+
 `git clone https://github.com/pauwell/elch.git`
 
 - `npm install`
 - `npm run build`
 
-## Example:
+## Example
 
 ```js
 const myTemplate = new Elch({
