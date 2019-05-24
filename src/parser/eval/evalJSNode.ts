@@ -2,7 +2,11 @@
 
 import { ITemplate } from '../../module/template';
 
-// TODO impl.
+/**
+ * Evaluate sandboxed `js`-expression nodes.
+ * @param statement The statement that gets evaluated.
+ * @param context The context in which it should be evaluated.
+ */
 const evalJSNode = (statement: string, context: ITemplate): string => {
   // Evaluate state variable.
   if (context.state.hasOwnProperty(statement)) {
