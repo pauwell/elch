@@ -15,12 +15,43 @@ const evalForNode = (forNode: HTMLSpanElement, condition: string, context: ITemp
   Function(
     'multipliedChildren', // The multiplied content of the for-node.
     'innerHTML', // The content of the for-node.
-    `for(${condition}){
-        multipliedChildren.push(innerHTML);
+    'replaceLoopVarsInHTML', // Evaluate the inner appearances of the loop variable.
+    `let loopVar;
+      if(/^var |^let /.test('${condition}')){
+        console.log('${condition}'.slice('${condition}'.indexOf(' '), '${condition}'.indexOf('=')).trim());
+        loopVar = '${condition}'.slice(
+          '${condition}'.indexOf(' '),
+          '${condition}'.indexOf('=')
+        ).trim();
+      }
+    for(${condition}){
+        if(loopVar){
+          multipliedChildren.push(replaceLoopVarsInHTML(loopVar, eval(loopVar), innerHTML));
+        } else{
+          multipliedChildren.push(innerHTML);
+        }
     }` // Add children in each loop.
-  ).call(context, multipliedChildren, forNode.innerHTML);
+  ).call(context, multipliedChildren, forNode.innerHTML, replaceLoopVarsInHTML);
 
   return multipliedChildren.join('');
+};
+
+/**
+ * TODO
+ * @param loopVar TODO
+ * @param innerHTML TODO
+ */
+const replaceLoopVarsInHTML = (loopVar: string, varValue: number, innerHTML: string) => {
+  // TODO only replace the variables between mustaches {{ $i }}
+  /* const findVarRegex = /{{.*?(\$i).*?}}/g;
+  while (findVarRegex.test(innerHTML)) {
+    innerHTML.replace(findVarRegex, loopVar);
+  } */
+  while (innerHTML.indexOf('$' + loopVar) >= 0) {
+    innerHTML = innerHTML.replace('$' + loopVar, String(varValue));
+  }
+
+  return innerHTML;
 };
 
 export default evalForNode;

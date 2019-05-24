@@ -9,7 +9,6 @@
 </head>
 <body>
   <div id="app"></div>
-  <button id="test-inc">Increase Count</button>
   <script src="dist/elch.js"></script>
   <script>
     // Test Template
@@ -26,11 +25,11 @@
           <do if="this.state.count > 2">
             <p>count greater than 2</p>
           </do>
+          <button do-event="click:incrementCount">Click</button>
           <do for="let i=0; i<this.state.count; ++i">
-            <p>todo, evaluate 'i': {{ i }}</p>
+            <p>{{$i}} * {{$i}} = {{ $i * $i }}</p>
           </do>
           <input type="text" value="${window.performance.now().toFixed(2)}" readonly>
-          <button do-event="click:incrementCount">Click</button>
         </div>`
       });
       console.log(myTemplate);
