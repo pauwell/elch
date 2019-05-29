@@ -4,11 +4,12 @@
   "description": "A tiny templating engine written in typescript",
   "main": "src/tiny-template.ts",
   "scripts": {
-    "build": "mkdir dist & npm run lint && browserify src/main.ts -p [ tsify --noImplicitAny --suppressImplicitAnyIndexErrors --target es6 ] --standalone Elch  > dist/elch.js",
+    "build": "mkdir dist & npm run lint && browserify src/main.ts -p [ tsify --noImplicitAny --suppressImplicitAnyIndexErrors --target es6 ] --standalone Elch  > dist/elch.js && npm run polish",
     "watch": "mkdir dist & watchify src/main.ts -p [ tsify --noImplicitAny --suppressImplicitAnyIndexErrors --target es6 ] --standalone Elch -o dist/elch.js -v",
     "docs": "typedoc --target es6 --out docs src/",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "test": "mocha --reporter spec --require ts-node/register 'test/test-suite.ts'"
+    "test": "mocha --reporter spec --require ts-node/register 'test/test-suite.ts'",
+    "polish": "node script/removeComments.js && node script/addLicense.js"
   },
   "keywords": [
     "elch",
@@ -30,6 +31,7 @@
     "@types/mocha": "^5.2.6",
     "chai": "^4.2.0",
     "mocha": "^6.1.4",
+    "strip-comments": "^1.0.2",
     "ts-node": "^8.1.0",
     "tslint": "^5.16.0",
     "typedoc": "^0.14.2"
