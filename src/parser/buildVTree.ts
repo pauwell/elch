@@ -19,7 +19,7 @@ const buildVTree = (htmlRoot: Element) => {
  */
 const parseChildren = (htmlChildren: NodeListOf<ChildNode>): Array<IVNode | string> => {
   const children: Array<IVNode | string> = [];
-  for (const htmlChild of htmlChildren) {
+  for (const htmlChild of htmlChildren as any) {
     if (htmlChild.nodeType === Node.TEXT_NODE) {
       children.push(htmlChild.textContent);
     } else {
@@ -34,7 +34,14 @@ const parseChildren = (htmlChildren: NodeListOf<ChildNode>): Array<IVNode | stri
  */
 const parseAttributes = (htmlAttributes: NamedNodeMap): object => {
   if (htmlAttributes.length > 0) {
-    return [...htmlAttributes]
+    // Convert nodemap to array because browserify fails on [...htmlAttributes].
+    const htmlAttributesArray: Attr[] = [];
+    for (let prop = 0; prop < htmlAttributes.length; ++prop) {
+      if (prop in htmlAttributes) {
+        htmlAttributesArray.push(htmlAttributes[prop]);
+      }
+    }
+    return htmlAttributesArray
       .map((htmlAttribute: Attr) => {
         // Create the correct key-value format.
         return {

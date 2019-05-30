@@ -4,16 +4,19 @@
   "description": "A tiny templating engine written in typescript",
   "main": "src/tiny-template.ts",
   "scripts": {
-    "build": "mkdir dist & npm run lint && browserify src/main.ts -p [ tsify --noImplicitAny --suppressImplicitAnyIndexErrors --target es6 ] --standalone Elch  > dist/elch.js && npm run polish",
-    "watch": "mkdir dist & watchify src/main.ts -p [ tsify --noImplicitAny --suppressImplicitAnyIndexErrors --target es6 ] --standalone Elch -o dist/elch.js -v",
-    "docs": "typedoc --target es6 --out docs src/",
+    "build": "mkdir dist & npm run lint && npm run browserify && npm run license",
+    "watch": "mkdir dist & npm run watchify",
+    "browserify": "browserify src/main.ts -p [ tsify --noImplicitAny --suppressImplicitAnyIndexErrors --target es5 ] --standalone Elch | uglifyjs  > dist/elch.min.js",
+    "watchify": "watchify src/main.ts -p [ tsify --noImplicitAny --suppressImplicitAnyIndexErrors --target es5 ] --standalone Elch -o dist/elch.js -v",
+    "docs": "typedoc --target es5 --out docs src/",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "test": "mocha --reporter spec --require ts-node/register 'test/test-suite.ts'",
-    "polish": "node script/removeComments.js && node script/addLicense.js"
+    "license": "node script/addLicense.js"
   },
   "keywords": [
     "elch",
-    "tiny",
+    "reactive",
+    "view",
     "template",
     "js"
   ],
@@ -33,6 +36,7 @@
     "tslint": "^5.16.0",
     "typedoc": "^0.14.2",
     "typescript": "^3.5.1",
+    "uglify-js": "^3.5.15",
     "watchify": "^3.11.1"
   }
 }
