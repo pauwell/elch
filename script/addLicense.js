@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 // Options.
-const bundlePath = 'dist/elch.js';
+const bundlePath = 'dist/elch.min.js';
 const encoding = 'utf-8';
 
 // License text.

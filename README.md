@@ -4,7 +4,7 @@
 
 :fire: Simple
 
-:fire: Lightweight
+:fire: Small (~15kb)
 
 :fire: Independent
 
@@ -54,7 +54,7 @@ myTemplate.mountTo(document.getElementById('app'));
 ```
 
 ### `Event`-attributes
+
 ```html
 <button do-event="click:incrementCount">Click</button>
 ```
-
