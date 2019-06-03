@@ -19,8 +19,22 @@ const renderElem = (vNode: IVNode, context: ITemplate): HTMLElement => {
   vNode.attributes = vNode.attributes || {};
   vNode.children = vNode.children || [];
 
+  // Check if its another template that needs instantiation.
+  const findUsingTemplateIndex = context.using
+    ? context.using.findIndex(
+        (other) => other.template.name.toLowerCase() === vNode.tagName.toLowerCase()
+      )
+    : -1;
+
   // Create a new DOM node.
   const $el = document.createElement(vNode.tagName);
+
+  if (findUsingTemplateIndex >= 0) {
+    // Create a temporary child to render the template to.
+    const $child = $el.appendChild(document.createElement('div'));
+    context.using[findUsingTemplateIndex].mountTo($child);
+    return $el.firstChild as HTMLElement;
+  }
 
   // Insert attributes from the vNode into the DOM node.
   for (const [k, v] of Object.entries(vNode.attributes)) {

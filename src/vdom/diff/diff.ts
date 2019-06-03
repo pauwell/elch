@@ -59,12 +59,26 @@ const diff = (
   const patchAttributes = diffAttributes(oldVTree.attributes, newVTree.attributes, context);
 
   // Create a patch for the child nodes.
-  const patchChildren = diffChildren(oldVTree.children, newVTree.children, context);
+  let patchChildren: (parent: HTMLElement | Text) => HTMLElement | Text;
+
+  // Check if its another template that needs instantiation.
+  const findUsingTemplateIndex = context.using
+    ? context.using.findIndex(
+        (other) => other.template.name.toLowerCase() === oldVTree.tagName.toLowerCase()
+      )
+    : -1;
+
+  // If this node is another template, let it handle the child patching by itself.
+  if (findUsingTemplateIndex < 0) {
+    patchChildren = diffChildren(oldVTree.children, newVTree.children, context);
+  }
 
   return (node) => {
     // Resolve the patches and return the node.
     patchAttributes(node);
-    patchChildren(node);
+    if (patchChildren) {
+      patchChildren(node);
+    }
     return node;
   };
 };
