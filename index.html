@@ -11,23 +11,39 @@
   <div id="app"></div>
   <script src="dist/elch.js"></script>
   <script>
+    // Test include.
+    const includeMe = new Elch({
+      name: 'include-me',
+      state: { count: 0 },
+      logic: { incrementCount(){ this.count += 2; } },
+      view: () => /*html*/`
+        <div class="include-me">
+          <button do-event="click:incrementCount">Increment inner</button>
+          <p>I am another template. My count: {{count}}</p>
+        </div>`
+    });
+
     // Test Template
     const myTemplate = new Elch({
       name: 'my-template',
       state: { count: 0 },
       logic: { incrementCount(){ this.count += 1; } },
+      using: [includeMe],
       view: () => /*html*/`
         <div class="bob">
           <h1>Just a demo!</h1>
+          <include-me>Hi</include-me>
           <do if="this.name.length > 0">
             <p id="idval" class="classval">Total updates since creation: {{count}}!</p>
           </do>
           <do if="this.state.count > 2">
             <p>count greater than 2</p>
           </do>
-          <button do-event="click:incrementCount">Click</button>
+          <button do-event="click:incrementCount">Performance test</button>
           <do for="let i=0; i<this.state.count; ++i">
-            <p>{{$i}} * {{$i}} = {{ $i * $i }}</p>
+            <do for="let j=0; j<this.state.count; ++j">
+              <p>{{$i}} * {{$j}} = {{ $i * $j }}</p>
+            </do>
           </do>
           <input type="text" value="${window.performance.now().toFixed(2)}" readonly>
         </div>`

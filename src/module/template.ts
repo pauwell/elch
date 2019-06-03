@@ -10,6 +10,7 @@ export interface ITemplate {
   name: string;
   state: { [x: string]: any };
   logic: { [x: string]: any };
+  using: Template[];
   view: () => string;
 }
 
