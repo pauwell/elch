@@ -58,3 +58,11 @@ myTemplate.mountTo(document.getElementById('app'));
 ```html
 <button do-event="click:incrementCount">Click</button>
 ```
+
+### Nested templates
+
+```html
+<div class="other-template">
+  <counter-app></counter-app>
+</div>
+```
