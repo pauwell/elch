@@ -8,6 +8,9 @@ import { ITemplate } from '../../module/template';
  * @param context The context in which it should be evaluated.
  */
 const evalJSNode = (statement: string, context: ITemplate): string => {
+  // Trim to search for property.
+  statement = statement.trim();
+
   // Evaluate state variable.
   if (context.state.hasOwnProperty(statement)) {
     return context.state[statement];

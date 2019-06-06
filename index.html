@@ -26,12 +26,17 @@
     // Test Template
     const myTemplate = new Elch({
       name: 'my-template',
-      state: { count: 0 },
-      logic: { incrementCount(){ this.count += 1; } },
+      state: { count: 0, text: '' },
+      logic: {
+        incrementCount(){ this.count += 1; },
+        updateText(event){ this.text = event.target.value; }
+      },
       using: [includeMe],
       view: () => /*html*/`
         <div class="bob">
           <h1>Just a demo!</h1>
+          <input type="text" do-event="input:updateText">
+          <p>Text: {{ text }}</p>
           <include-me>Hi</include-me>
           <do if="this.name.length > 0">
             <p id="idval" class="classval">Total updates since creation: {{count}}!</p>
