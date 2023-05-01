@@ -33,7 +33,7 @@
     "ts-node": "^8.1.0",
     "tsify": "^4.0.1",
     "tslint": "^5.16.0",
-    "typedoc": "^0.14.2",
+    "typedoc": "^0.24.6",
     "typescript": "^3.5.1",
     "uglify-js": "^3.5.15",
     "watchify": "^3.11.1"
